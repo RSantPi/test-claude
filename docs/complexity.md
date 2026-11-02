@@ -72,3 +72,29 @@ a factor of 7 to 40. The shape of the eigenvalue decay matters too.
 A learner's excess error is its squared error on the signal minus the true
 model's, on the same data. This captures whatever `C` can't: a wrong kernel,
 poor tuning, or a mean function the learner struggles with.
+
+## Example results
+
+From `examples/compare_learners.py`, with noise 0.1 and 4 repeats per row. Errors
+are squared error on the signal, whose variance is 1. GPR and KRR use an RBF
+kernel. Coverage is for GPR's 95% interval on noisy test outputs.
+
+| Signal | `r` | `n` | `C` | Ideal | GPR | KRR | Coverage |
+|---|---|---|---|---|---|---|---|
+| Smooth 2D | 15.2 | 50 | 0.0621 | 0.0709 | 0.0771 | 0.1840 | 0.919 |
+| | | 200 | 0.0063 | 0.0066 | 0.0066 | 0.0064 | 0.946 |
+| | | 800 | 0.0012 | 0.0012 | 0.0012 | 0.0012 | 0.939 |
+| Smooth 2D, step mean | 15.2 | 50 | 0.0621 | 0.0709 | 0.2316 | 0.2389 | 0.866 |
+| | | 200 | 0.0063 | 0.0066 | 0.0612 | 0.0774 | 0.916 |
+| | | 800 | 0.0012 | 0.0012 | 0.0206 | 0.0319 | 0.923 |
+| One wave 2D | 9.3 | 50 | 0.0240 | 0.0228 | 0.4308 | 0.6222 | 0.921 |
+| | | 200 | 0.0037 | 0.0035 | 0.0200 | 0.0522 | 0.954 |
+| | | 800 | 0.0008 | 0.0009 | 0.0019 | 0.0022 | 0.940 |
+| Two waves 2D | 13.4 | 50 | 0.0436 | 0.0383 | 0.6661 | 0.7338 | 0.928 |
+| | | 200 | 0.0057 | 0.0059 | 0.0561 | 0.1139 | 0.946 |
+| | | 800 | 0.0012 | 0.0012 | 0.0031 | 0.0055 | 0.942 |
+| Wide 3D | 59.1 | 50 | 0.4836 | 0.4154 | 0.5144 | 0.4170 | 0.889 |
+| | | 200 | 0.1148 | 0.1116 | 0.1126 | 0.1143 | 0.946 |
+| | | 800 | 0.0130 | 0.0118 | 0.0120 | 0.0118 | 0.942 |
+
+The ideal model knows the mean function, so the step changes only GPR and KRR.
